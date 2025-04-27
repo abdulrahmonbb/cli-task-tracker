@@ -50,6 +50,37 @@ def add_task(description):
     save_tasks(tasks_data)
     print(f"Task added successfully with ID: {task_id}")
 
+def update_task(task_id, description=None, status=None):
+    """Update an existing task's description or status."""
+    tasks_data = load_tasks()
+
+    # Convert task_id to integer
+    task_id = int(task_id)
+
+    for task in tasks_data["tasks"]:
+        if task["id"] == task_id:
+            if description:
+                task["description"] = description
+            if status:
+                if status not in VALID_STATUSES:
+                    print(f"Error: Invalid status. Must be one of {VALID_STATUSES}")
+                    return
+                task["status"] = status
+            task["updated-at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        save_tasks(task_data)
+            print(f"Task {task_id} updated successfully")
+        return
+    
+    print(f"Error: Task with ID {task_id} not found")
+
+
+
+
+
+
+
+
+
 
 
 
