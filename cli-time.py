@@ -67,8 +67,8 @@ def update_task(task_id, description=None, status=None):
                     return
                 task["status"] = status
             task["updated-at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        save_tasks(task_data)
-            print(f"Task {task_id} updated successfully")
+        save_tasks(tasks_data)
+        print(f"Task {task_id} updated successfully")
         return
     
     print(f"Error: Task with ID {task_id} not found")
@@ -87,7 +87,7 @@ def delete_task(task_id):
         save_tasks(tasks_data)
         print(f"Task {task_id} deleted successfully")
     else:
-        print(f"Error: Task ID {task id} not found")
+        print(f"Error: Task ID {task_id} not found")
 
 
 def list_tasks(status_filter=None):
@@ -115,6 +115,10 @@ def list_tasks(status_filter=None):
         return
     
     print(f"{'ID':<5} {'Status':<12} {'Description': <50} {'Updated At':<20}")
+    print("-" * 87)
+    
+    for task in filtered_tasks:
+        print(f"{task['id']:<5} {task['status']:<12} {task['description']:<50} {task['updated_at']:<20}")
 
 
 def print_help():
@@ -170,122 +174,20 @@ def main():
                 delete_task(sys.argv[2])
 
             elif command == "list":
-                if sys.argv < 2:
+                if len(sys.argv) == 2:
                     list_tasks()
-                elif 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                elif len(sys.argv) == 3 and sys.argv[2] in VALID_STATUSES + ["not_done"]:
+                    list_tasks(sys.argv[2])
+                else:
+                    print("Error: Invalid list command")
+                    print_help()
+            else:
+                print("Error: Invalid command or arguments")
+                print_help()
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+
+
+if __name__ == "__main__":
+    main()
